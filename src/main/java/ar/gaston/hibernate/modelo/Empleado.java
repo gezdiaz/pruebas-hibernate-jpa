@@ -1,12 +1,16 @@
 package ar.gaston.hibernate.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "EMPLEADO")
@@ -25,18 +29,31 @@ public class Empleado implements Serializable{
 	private String nombre;
 	
 	@Column(name = "FECHA_NACIMIENTO")
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
+	
+	@OneToOne(cascade = { CascadeType.ALL})//Esto es para que cunado se guarde el empleado, también se guarde la dirección,
+	//										para no tener que guardarla antes
+	@JoinColumn(name = "ID_DIRECCION") //Acá le digo que la tabla EMPLEADO tiene una clave foranea de DIRECCION,
+	//									el nombre es de la columna en EMPLEADO
+	private Direccion direccion;
 	
 	public Empleado() {
 		
 	}
 
-	public Empleado(Long codigo, String apellidos, String nombre, Date fechaNacimiento) {
-		super();
+	public Empleado(Long codigo, String apellidos, String nombre, LocalDate fechaNacimiento) {
 		this.codigo = codigo;
 		this.apellidos = apellidos;
 		this.nombre = nombre;
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public Direccion getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	public Long getCodigo() {
@@ -63,18 +80,18 @@ public class Empleado implements Serializable{
 		this.nombre = nombre;
 	}
 
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	@Override
 	public String toString() {
 		return "Empleado [codigo=" + codigo + ", apellidos=" + apellidos + ", nombre=" + nombre + ", fechaNacimiento="
-				+ fechaNacimiento + "]";
+				+ fechaNacimiento + ", direccion=" + direccion + "]";
 	}
 
 	
