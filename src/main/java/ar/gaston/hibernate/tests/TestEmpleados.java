@@ -23,26 +23,14 @@ public class TestEmpleados {
 		emf = Persistence.createEntityManagerFactory("aplicacion");//"aplicacion" Es el que esta en el archivo xml
 		EntityManager manager = emf.createEntityManager();
 		
-//		Empleado e = new Empleado(10L, "Pérez", "Pepito", new GregorianCalendar(1997, 6, 3).getTime());
-		Empleado e2;
+		Empleado e = new Empleado(10L, "Pérez", "Pepito", new GregorianCalendar(1997, 6, 3).getTime());
+		
 		manager.getTransaction().begin();
-		e2 = manager.find(Empleado.class, 20L);
-		System.out.println("Encontrado: "+ e2);
-		e2.setFechaNacimiento(new GregorianCalendar(1943, 6, 12).getTime());
+		manager.persist(e);
 		manager.getTransaction().commit();
 		manager.close();
+
 		imprimirTodo();
-		
-//		manager = emf.createEntityManager();
-//		manager.getTransaction().begin();
-//		e = manager.find(Empleado.class, 10L);
-////		e.setApellidos("Díaz");
-////		manager.merge(e);
-//		manager.remove(e);
-////		manager.persist(e);
-//		manager.getTransaction().commit();
-//		manager.close();
-//		 imprimirTodo();
 		
 	}
 
