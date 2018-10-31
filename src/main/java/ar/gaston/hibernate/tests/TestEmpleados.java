@@ -1,16 +1,14 @@
 package ar.gaston.hibernate.tests;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 
-import org.hibernate.exception.ConstraintViolationException;
-
+import ar.gaston.hibernate.modelo.Direccion;
 import ar.gaston.hibernate.modelo.Empleado;
 
 public class TestEmpleados {
@@ -23,15 +21,17 @@ public class TestEmpleados {
 		emf = Persistence.createEntityManagerFactory("aplicacion");//"aplicacion" Es el que esta en el archivo xml
 		EntityManager manager = emf.createEntityManager();
 		
-		Empleado e = new Empleado(10L, "Pérez", "Pepito", new GregorianCalendar(1997, 6, 3).getTime());
-		
+
+		Empleado e = new Empleado(10L, "Pérez", "Sherman", LocalDate.of(1973, Month.JULY, 3));
+		e.setDireccion(new Direccion(15L, "Calle Walaby 42", "Sídney", "Nueva Gales del Sur", "Australia"));
+
 		manager.getTransaction().begin();
 		manager.persist(e);
 		manager.getTransaction().commit();
 		manager.close();
 
 		imprimirTodo();
-		
+
 	}
 
 	private static void imprimirTodo() {
