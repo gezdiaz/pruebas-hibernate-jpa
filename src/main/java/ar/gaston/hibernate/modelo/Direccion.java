@@ -1,9 +1,11 @@
 package ar.gaston.hibernate.modelo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,7 +29,8 @@ public class Direccion {
 	@Column(name = "PAIS")
 	private String pais;
 
-	@OneToOne(mappedBy = "direccion", fetch = FetchType.LAZY)//Para que sea bidireccional, "direccion" es el atributo de la CLASE Empleado
+	@OneToOne(mappedBy = "direccion", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})//Para que sea bidireccional, "direccion" es el atributo de la CLASE Empleado
+	@JoinColumn(name = "ID_EMPLEADO")
 	Empleado empleado;										//LAZY es para que no busque el empleado hasta que no se pida
 	
 	public Direccion() {

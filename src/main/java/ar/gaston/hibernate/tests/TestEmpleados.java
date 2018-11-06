@@ -23,10 +23,11 @@ public class TestEmpleados {
 		
 
 		Empleado e = new Empleado(10L, "Pérez", "Sherman", LocalDate.of(1973, Month.JULY, 3));
-		e.setDireccion(new Direccion(15L, "Calle Walaby 42", "Sídney", "Nueva Gales del Sur", "Australia"));
+		Direccion d = new Direccion(15L, "Calle Walaby 42", "Sídney", "Nueva Gales del Sur", "Australia");
+		e.setDireccion(d);
 
 		manager.getTransaction().begin();
-		manager.persist(e);
+		manager.persist(d);
 		manager.getTransaction().commit();
 		manager.close();
 
